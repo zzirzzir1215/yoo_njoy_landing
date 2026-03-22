@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yoo_njoy | Premium Family Travel Creator</title>
+  <meta name="description" content="You & Joy — 일본 가족여행을 깊이 있게 정리하는 프리미엄 크리에이터 Yoo_njoy" />
+  <meta property="og:title" content="Yoo_njoy | Premium Family Travel Creator" />
+  <meta property="og:description" content="You & Joy — 일본 가족여행을 깊이 있게 정리하는 프리미엄 크리에이터" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#0b1020" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: rgba(255,255,255,0.06);
+      --card: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.12);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --subtle: #94a3b8;
+      --accent: #f7c6d9;
+      --accent-2: #b8e6ff;
+      --accent-3: #f9e7b6;
+      --shadow: 0 20px 80px rgba(0,0,0,0.35);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(247,198,217,0.18), transparent 28%),
+        radial-gradient(circle at 85% 18%, rgba(184,230,255,0.14), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(249,231,182,0.10), transparent 28%),
+        linear-gradient(180deg, #0a0f1e 0%, #0c1326 48%, #0a0e18 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      opacity: 0.06;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+    }
+
+    .orb, .orb::after {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(30px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .orb.one {
+      width: 320px; height: 320px;
+      background: rgba(247,198,217,0.18);
+      top: 10%; left: -60px;
+      animation: floatY 11s ease-in-out infinite;
+    }
+    .orb.two {
+      width: 260px; height: 260px;
+      background: rgba(184,230,255,0.16);
+      bottom: 8%; right: -40px;
+      animation: floatY 13s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-28px) translateX(12px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(247,198,217,0.22); }
+      50% { box-shadow: 0 0 0 18px rgba(247,198,217,0); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 11, 23, 0.58);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(247,198,217,.35), rgba(184,230,255,.25));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: var(--shadow);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 22px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    nav a, .btn, .chip {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    nav a:hover { color: white; }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); }
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(247,198,217,0.92), rgba(184,230,255,0.88));
+      color: #0f172a;
+      border-color: transparent;
+    }
+    .btn.primary.glow { animation: pulseGlow 2.8s infinite; }
+
+    .hero {
+      padding: 88px 0 44px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+      animation: fadeUp .7s ease both;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      animation: fadeUp .85s ease both;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, #f7c6d9 35%, #b8e6ff 68%, #fff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 7s linear infinite;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+      max-width: 760px;
+      margin: 22px 0 28px;
+      animation: fadeUp 1s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      animation: fadeUp 1.15s ease both;
+    }
+
+    .hero-card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 32px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeUp 1.05s ease both;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 30%, transparent 70%, rgba(255,255,255,.04));
+      pointer-events: none;
+    }
+
+    .profile-shell {
+      position: relative;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background:
+        radial-gradient(circle at top right, rgba(247,198,217,0.22), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(184,230,255,0.18), transparent 34%),
+        rgba(8,12,24,0.72);
+      overflow: hidden;
+    }
+
+    .mock-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 18px 0;
+      color: var(--subtle);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .mock-main {
+      padding: 22px 24px 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(247,198,217,0.9), rgba(184,230,255,0.88));
+      color: #0f172a;
+      font-size: 28px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 16px 30px rgba(0,0,0,0.22);
+    }
+
+    .title strong {
+      display: block;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .title span {
+      color: var(--muted);
+      line-height: 1.6;
+      display: block;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat b {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: var(--subtle);
+      font-size: 13px;
+    }
+
+    .floating-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      font-size: 13px;
+      transition: transform .25s ease, background .25s ease;
+    }
+
+    .chip:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.045em;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.8;
+    }
+
+    .grid-3, .grid-2, .grid-4 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+    .card {
+      position: relative;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.045));
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.14), transparent 70%);
+      pointer-events: none;
+    }
+
+    .card h3, .card h4 {
+      margin: 0 0 12px;
+      letter-spacing: -0.03em;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 18px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #0f172a;
+      background: linear-gradient(135deg, rgba(247,198,217,0.95), rgba(184,230,255,0.88));
+    }
+
+    .quote {
+      padding: 28px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(247,198,217,0.12), rgba(184,230,255,0.08));
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.45;
+      letter-spacing: -0.04em;
+      box-shadow: var(--shadow);
+    }
+
+    .quote small {
+      display: block;
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--subtle);
+      letter-spacing: 0;
+    }
+
+    .contact-box {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .panel {
+      padding: 26px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .mini-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 28px 0 54px;
+      color: var(--subtle);
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      nav ul { display: none; }
+      .hero, .contact-box, .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; }
+      .hero { padding-top: 54px; }
+      .hero-card { min-height: auto; }
+      .section-title { display: grid; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(calc(100% - 20px), var(--max)); }
+      .nav { padding: 12px 0; }
+      .actions .btn:not(.primary) { display: none; }
+      .hero p { font-size: 16px; }
+      .stats { grid-template-columns: 1fr; }
+      .card, .panel, .quote { padding: 20px; }
+      .hero-card { padding: 10px; }
+      .mock-main { padding: 16px; gap: 12px; }
+      .avatar { width: 72px; height: 72px; border-radius: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="brand-badge">✦</div>
+        <div>
+          <div>Yoo_njoy</div>
+          <small style="color: var(--subtle); font-weight: 500;">Family Travel Brand</small>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#strength">Strength</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <a class="btn" href="#services">Portfolio</a>
+        <a class="btn primary glow" href="#contact">Collaboration</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">✈️ Yoo_njoy · 일본 가족여행 크리에이터</div>
+        <h1>
+          You & <span class="gradient-text">Joy</span><br />
+          가족여행에 깊이를 더하는 크리에이터
+        </h1>
+        <p>
+          가족여행이 온전한 기쁨이 되도록 —
+          동선, 쇼핑, 숙소, 육아 인사이트를 하나의 흐름으로 정리해
+          <strong style="color:white; font-weight:700;">탐색에서 전환까지</strong> 이어지는 콘텐츠를 만듭니다.
+        </p>
+        <div class="hero-cta">
+          <a href="#about" class="btn primary">브랜드 소개</a>
+          <a href="#contact" class="btn">협업 문의</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="profile-shell">
+          <div class="mock-top">
+            <span>Brand Profile</span>
+            <span>Instagram</span>
+          </div>
+          <div class="mock-main">
+            <div class="avatar-row">
+              <div class="avatar">YN</div>
+              <div class="title">
+                <strong>유앤조이 | 쭈맘 여행&육아</strong>
+                <span>23년생 아이와 떠나는 일본 가족여행</span>
+              </div>
+            </div>
+
+            <div class="stats">
+              <div class="stat">
+                <b>14K+</b>
+                <span>Growing audience</span>
+              </div>
+              <div class="stat">
+                <b>Japan</b>
+                <span>Family travel</span>
+              </div>
+              <div class="stat">
+                <b>DM / Email</b>
+                <span>Inquiry channel</span>
+              </div>
+            </div>
+
+            <div class="floating-tags">
+              <span class="chip">🇯🇵 일본 여행 특화</span>
+              <span class="chip">👶 아이동반 실전 동선</span>
+              <span class="chip">🛍 쇼핑 큐레이션</span>
+              <span class="chip">🏨 숙소·브랜드 협업</span>
+              <span class="chip">📍 저장형 콘텐츠</span>
+            </div>
+
+            <div class="card" style="padding:18px 20px; background: rgba(255,255,255,0.05);">
+              <p style="font-size:15px; margin:0;">
+                "현지 경험 × 육아 시선의 가족여행 큐레이터"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section reveal">
+      <div class="section-title">
+        <h2>About the Brand</h2>
+        <p>여행을 준비할 때 가장 먼저 찾게 되는 계정을 지향합니다.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="icon">✦</div>
+          <h3>브랜드 포지션</h3>
+          <p>
+            일본 가족여행을 준비하는 부모를 위한 프리미엄 실용 콘텐츠 브랜드.
+            여행지 선정, 동선 설계, 쇼핑, 숙소, 시즌 팁까지 연결하는
+            원스톱 콘텐츠 구조를 갖추고 있습니다.
+          </p>
+        </div>
+        <div class="card">
+          <div class="icon">♡</div>
+          <h3>콘텐츠 톤앤매너</h3>
+          <p>
+            신뢰감 있는 문장, 따뜻한 비주얼, 과장 없는 실제 후기 중심.
+            정보는 선명하게, 브랜드 협업은 세련된 라이프스타일 무드로 전달합니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="strength" class="section reveal">
+      <div class="section-title">
+        <h2>Why Yoo_njoy</h2>
+        <p>단순 노출이 아닌, '내 상황에 적용 가능하다'는 공감을 만드는 것이 강점입니다.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon">🗾</div>
+          <h4>Japan Expertise</h4>
+          <p>관광형 추천이 아닌, 현지 이해도에 기반한 실제 여행자의 선택 기준에 맞는 정보를 전달합니다.</p>
+        </div>
+        <div class="card">
+          <div class="icon">👨‍👩‍👧</div>
+          <h4>Family-first Lens</h4>
+          <p>아이와 함께 움직이는 현실을 기준으로 이동, 식사, 숙소의 핵심을 짚습니다.</p>
+        </div>
+        <div class="card">
+          <div class="icon">📈</div>
+          <h4>Conversion-friendly</h4>
+          <p>저장, 댓글, DM 유도형 구조에 강점이 있어 제휴·협찬·공구에서 실제 구매로 이어지는 콘텐츠를 만듭니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section reveal">
+      <div class="section-title">
+        <h2>Collaboration Services</h2>
+        <p>콘텐츠 제작부터 구매 유도까지, 확장 가능한 협업 구조를 제안합니다.</p>
+      </div>
+      <div class="grid-4">
+        <div class="card">
+          <div class="icon">🎥</div>
+          <h4>Instagram Reels</h4>
+          <p>짧은 훅과 실제 활용 맥락을 결합한 저장형 릴스</p>
+        </div>
+        <div class="card">
+          <div class="icon">📚</div>
+          <h4>Guide Content</h4>
+          <p>노션·PDF·체크리스트형 부가 콘텐츠로 정보 가치를 강화</p>
+        </div>
+        <div class="card">
+          <div class="icon">🛍</div>
+          <h4>Product Storytelling</h4>
+          <p>아이동반 여행에서 제품이 해결하는 문제를 스토리로 전달</p>
+        </div>
+        <div class="card">
+          <div class="icon">🏨</div>
+          <h4>Hotel & Travel</h4>
+          <p>숙소·지역의 가족친화 포인트를 담은 브랜디드 콘텐츠</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="quote">
+        Travel is not about information —<br />
+        it's about <strong>curation</strong>.
+        <small>— 정보 너머, 당신의 기쁨이 될 단 하나. Yoo_njoy</small>
+      </div>
+    </section>
+
+    <section id="process" class="section reveal">
+      <div class="section-title">
+        <h2>Collaboration Flow</h2>
+        <p>공감에서 구매까지, 구조 있는 협업 흐름을 제안합니다.</p>
+      </div>
+      <div class="timeline">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div>
+            <h4>Audience Fit Review</h4>
+            <p>브랜드와 일본 가족여행 타깃의 적합도를 점검합니다.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div>
+            <h4>Content Angle Design</h4>
+            <p>'왜 필요한가'가 보이도록 아이동반 상황 기반의 실제 사용 맥락을 설계합니다.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div>
+            <h4>Premium Production</h4>
+            <p>따뜻한 톤, 정돈된 자막, 감도 있는 카피로 완성합니다.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div>
+            <h4>Sales & Conversion</h4>
+            <p>저장·DM·링크를 통해 파트너사 제품 구매 및 서비스 문의로 전환하고, 성과를 함께 확인합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section reveal">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <p>숙소, 여행, 유아용품, 라이프스타일 브랜드와 높은 시너지를 만듭니다.</p>
+      </div>
+      <div class="contact-box">
+        <div class="panel">
+          <h3 style="margin-top:0; font-size:30px; letter-spacing:-0.04em;">Let's create a journey that brings your family joy.</h3>
+          <p style="color:var(--muted); line-height:1.9; margin-top:12px;">
+            협업 문의는 이메일 또는 인스타그램 DM으로 편하게 보내주세요.
+          </p>
+          <div class="mini-list">
+            <div class="mini-item">📩 Email: yoo.njoysns@gmail.com</div>
+            <div class="mini-item">📱 Instagram: @yoo_njoy</div>
+            <div class="mini-item">🤝 Ideal Partners: Travel · Hotel · Kids Mobility · Family Lifestyle</div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3 style="margin-top:0;">Partnership Areas</h3>
+          <ul style="display:grid; gap:10px; color:var(--muted); line-height:1.8; padding-left:18px; margin:14px 0 0;">
+            <li>숙소·호텔 브랜디드 콘텐츠</li>
+            <li>유아용품·이동용품 제품 리뷰</li>
+            <li>여행 서비스·앱 소개 캠페인</li>
+            <li>라이프스타일 브랜드 협업</li>
+          </ul>
+          <div style="margin-top:22px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" href="https://www.instagram.com/yoo_njoy/" target="_blank" rel="noopener">Instagram</a>
+            <a class="btn" href="mailto:yoo.njoysns@gmail.com">Email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>&copy; 2026 Yoo_njoy. All rights reserved.</div>
+    </footer>
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
